@@ -85,6 +85,8 @@ public class TransactionService {
 
     public List<Transaction> getTransactions(long accountNumber) {
         accountService.getAccount(accountNumber);
+        LOG.info("Getting all transactions for account {}", accountNumber);
+
         List<Transaction> transactions = this.transactionRepository.getByAccountNumber(accountNumber);
         checkAnyTransactionIsFound(accountNumber, transactions);
         return transactions;
@@ -92,6 +94,8 @@ public class TransactionService {
 
     public List<Transaction> getTransactionsByAccountNumberAndPeriod(long accountNumber, LocalDate begin, LocalDate end) {
         accountService.getAccount(accountNumber);
+        LOG.info("Getting all transactions for account {} between {} - {}", accountNumber, begin, end);
+
         List<Transaction> transactions = this.transactionRepository.getByAccountNumberAndPeriod(accountNumber, begin, end);
         checkAnyTransactionIsFound(accountNumber, transactions);
         return transactions;
