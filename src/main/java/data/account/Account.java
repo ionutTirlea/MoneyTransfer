@@ -24,6 +24,10 @@ public class Account {
 
     private Currency currency;
 
+    public Account() {
+
+    }
+
     Account(long accountNumber, String accountHolder) {
         this.id = UUID.randomUUID();
         this.accountNumber = accountNumber;

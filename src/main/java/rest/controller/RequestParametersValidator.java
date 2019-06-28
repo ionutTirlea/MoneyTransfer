@@ -1,7 +1,6 @@
 package rest.controller;
 
 import exceptions.BadRequestException;
-import spark.utils.StringUtils;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -37,11 +36,6 @@ class RequestParametersValidator {
 
 
     static LocalDate validateAndParseDate(String date) {
-
-        if (StringUtils.isEmpty(date)) {
-            return null;
-        }
-
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("ddMMyyyy");
         try {
             return LocalDate.parse(date, dateTimeFormatter);

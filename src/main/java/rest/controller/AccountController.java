@@ -13,7 +13,11 @@ import static rest.controller.RequestParametersValidator.validateAndParseAccount
 
 public class AccountController {
 
-    private AccountService accountService = new AccountService();
+    private AccountService accountService;
+
+    public AccountController(AccountService accountService) {
+        this.accountService = accountService;
+    }
 
     public AccountResponse createAccount(String name) {
         return toResponse(accountService.createAccount(name));

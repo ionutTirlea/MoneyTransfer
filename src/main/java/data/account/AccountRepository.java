@@ -6,19 +6,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class AccountRepository {
 
-    private static AccountRepository instance;
-
-    private AccountRepository() {
-
-    }
-
-    public static AccountRepository getInstance() {
-        if (instance == null) {
-            instance = new AccountRepository();
-        }
-        return instance;
-    }
-
     private ConcurrentHashMap<Long, Account> accounts = new ConcurrentHashMap<>();
 
     public List<Account> getAll() {

@@ -11,7 +11,7 @@ public class AccountResponse {
 
     private long accountNumber;
 
-    private String name;
+    private String accountHolder;
 
-    private double amount;
+    private double balance;
 }

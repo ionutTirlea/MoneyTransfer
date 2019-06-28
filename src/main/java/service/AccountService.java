@@ -12,7 +12,11 @@ public class AccountService {
 
     private static final Logger LOG = LoggerFactory.getLogger(AccountService.class);
 
-    private AccountRepository accountRepository = AccountRepository.getInstance();
+    private AccountRepository accountRepository;
+
+    public AccountService(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
+    }
 
     public Account createAccount(String accountHolder) {
         LOG.info("Creating new account for accountHolder {}", accountHolder);

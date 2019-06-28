@@ -19,8 +19,13 @@ import static rest.controller.RequestParametersValidator.validateAndParseDate;
 
 public class TransactionController {
 
-    private AccountService accountService = new AccountService();
-    private TransactionService transactionService = new TransactionService();
+    private AccountService accountService;
+    private TransactionService transactionService;
+
+    public TransactionController(AccountService accountService, TransactionService transactionService) {
+        this.accountService = accountService;
+        this.transactionService = transactionService;
+    }
 
     public List<TransactionResponse> getTransactions(String accountNumber) {
         long accountId = validateAndParseAccountNumber(accountNumber);

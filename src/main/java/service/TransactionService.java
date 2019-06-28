@@ -20,12 +20,18 @@ public class TransactionService {
 
     private static final Logger LOG = LoggerFactory.getLogger(AccountService.class);
 
-    private AccountService accountService = new AccountService();
-    private TransactionRepository transactionRepository = new TransactionRepository();
+    private AccountService accountService;
+    private TransactionRepository transactionRepository;
+
+    public TransactionService(AccountService accountService, TransactionRepository transactionRepository) {
+        this.accountService = accountService;
+        this.transactionRepository = transactionRepository;
+    }
 
     public synchronized void deposit(long accountNumber, BigDecimal amount) {
-        LOG.info("Deposit {} to account {}", amount.doubleValue(), accountNumber);
         checkAmount(amount);
+        LOG.info("Deposit {} to account {}", amount.doubleValue(), accountNumber);
+
         Account account = accountService.getAccount(accountNumber);
         synchronized (account) {
             account.setBalance(account.getBalance().add(amount));
@@ -35,8 +41,8 @@ public class TransactionService {
     }
 
     public void withdraw(long accountNumber, BigDecimal amount) {
-        LOG.info("Withdraw {} from account {}", amount.doubleValue(), accountNumber);
         checkAmount(amount);
+        LOG.info("Withdraw {} from account {}", amount.doubleValue(), accountNumber);
 
         Account account = accountService.getAccount(accountNumber);
         checkBalanceAfterWithdrawal(amount, account);
@@ -49,16 +55,14 @@ public class TransactionService {
 
 
     public void transfer(long fromAccountNumber, long toAccountNumber, BigDecimal amount) {
-
-        LOG.info("Transfer {} from account {} to account {}", amount.doubleValue(), fromAccountNumber, toAccountNumber);
         checkAmount(amount);
-        checkAccount(fromAccountNumber, toAccountNumber);
+        LOG.info("Transfer {} from account {} to account {}", amount.doubleValue(), fromAccountNumber, toAccountNumber);
 
+        checkAccount(fromAccountNumber, toAccountNumber);
         Account from = accountService.getAccount(fromAccountNumber);
         Account to = accountService.getAccount(toAccountNumber);
 
         checkBalanceAfterWithdrawal(amount, from);
-
         transfer(to, from, amount);
 
         transactionRepository.create(fromAccountNumber, DEBIT, amount);
@@ -106,6 +110,9 @@ public class TransactionService {
         }
         if (amount.signum() < 0) {
             throw new BadRequestException("Amount can't be negative");
+        }
+        if (amount.equals(BigDecimal.ZERO)) {
+            throw new BadRequestException("Amount must be > 0!");
         }
     }
 
