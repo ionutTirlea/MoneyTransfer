@@ -1,16 +1,29 @@
 package rest.controller;
 
-@Test
+import org.junit.Test;
+
 public class AccountControllerTest {
 
     private AccountController accountController;
 
-    testAccountCreation();
+    @Test
+    public void testAccountCreation() {
 
-    testGetAllAccountsInvalid();
+    }
 
-    testGetAccountByAccountNumber();
+    @Test
+    public void testGetAllAccountsInvalid() {
 
-    testGetAccountByAccountNumberInvalid();
+    }
+
+    @Test
+    public void testGetAccountByAccountNumber() {
+
+    }
+
+    @Test
+    public void testGetAccountByAccountNumberInvalid() {
+
+    }
 
 }

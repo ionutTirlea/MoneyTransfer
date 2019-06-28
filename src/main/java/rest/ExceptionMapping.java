@@ -16,16 +16,19 @@ class ExceptionMapping {
         exception(ResourceNotFoundException.class, (e, request, response) -> {
             response.status(404);
             response.body(e.getMessage());
+            response.type("application/json");
         });
 
         exception(BadRequestException.class, (e, request, response) -> {
             response.status(400);
             response.body(e.getMessage());
+            response.type("application/json");
         });
 
-        exception(InsufficientFundsException.class , (e, request, response) -> {
+        exception(InsufficientFundsException.class, (e, request, response) -> {
             response.status(400);
             response.body(e.getMessage());
+            response.type("application/json");
         });
     }
 
