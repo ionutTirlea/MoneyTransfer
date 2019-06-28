@@ -1,13 +1,12 @@
 # MoneyTransfer
-MoneyTransfer
 
-Build
+**Build**
 mvn clean install
 
-Test
+**Test**
 mvn clean install
 
-Run
+**Run**
 from command line:
 
 java -jar .\\target\\money-transfer-1.0-SNAPSHOT.jar
