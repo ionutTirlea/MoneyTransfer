@@ -1,6 +1,7 @@
 package rest.controller;
 
 import exceptions.BadRequestException;
+import exceptions.MissingParameterException;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -13,8 +14,10 @@ class RequestParametersValidator {
 
     }
 
-
     static long validateAndParseAccountNumber(String accountNumber) {
+        if (accountNumber == null) {
+            throw new MissingParameterException("accountNumber");
+        }
         long accountId;
         try {
             accountId = Long.parseLong(accountNumber);
@@ -25,6 +28,9 @@ class RequestParametersValidator {
     }
 
     static BigDecimal validateAndParseAmount(String amount) {
+        if (amount == null) {
+            throw new MissingParameterException("amount");
+        }
         BigDecimal value;
         try {
             value = BigDecimal.valueOf(Double.parseDouble(amount));
@@ -34,8 +40,10 @@ class RequestParametersValidator {
         return value;
     }
 
-
     static LocalDate validateAndParseDate(String date) {
+        if (date == null) {
+            throw new MissingParameterException("date");
+        }
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("ddMMyyyy");
         try {
             return LocalDate.parse(date, dateTimeFormatter);

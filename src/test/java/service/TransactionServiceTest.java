@@ -50,7 +50,6 @@ public class TransactionServiceTest {
     @Test(expected = BadRequestException.class)
     public void testDeposit_NullAmount() {
         transactionService.deposit(ACCOUNT_NUMBER, null);
-
     }
 
     @Test(expected = BadRequestException.class)
@@ -129,7 +128,10 @@ public class TransactionServiceTest {
         Account fromAccount = new Account();
         fromAccount.setBalance(BigDecimal.ONE);
 
+        Account toAccount = new Account();
+
         when(accountService.getAccount(FROM_ACCOUNT_NUMBER)).thenReturn(fromAccount);
+        when(accountService.getAccount(TO_ACCOUNT_NUMBER)).thenReturn(toAccount);
         transactionService.transfer(FROM_ACCOUNT_NUMBER, TO_ACCOUNT_NUMBER, BigDecimal.TEN);
     }
 

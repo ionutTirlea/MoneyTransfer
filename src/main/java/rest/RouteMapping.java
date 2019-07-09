@@ -29,7 +29,6 @@ class RouteMapping {
         TransactionController transactionController = new TransactionController(accountService, transactionService);
 
         /* q = request, r = response */
-
         path("/api", () -> {
 
             post("/accounts/:accountHolder", (q, r) -> accountController.createAccount(q.params("accountHolder")), asJson());
@@ -38,25 +37,25 @@ class RouteMapping {
 
             get("/transactions/:accountNumber", (q, r) -> transactionController.getTransactions(q.params("accountNumber")), asJson());
             get("/transactions/:accountNumber/filter", (q, r) -> {
-                String accountNumber = "accountNumber";
+                String accountNumber = q.params("accountNumber");
                 String begin = q.queryParams("begin");
                 String end = q.queryParams("end");
                 return transactionController.getTransactionsByAccountNumberAndPeriod(accountNumber, begin, end);
             }, asJson());
-            post("/transactions/:accountNumber/:balance/deposit", (q, r) -> {
+            post("/transactions/:accountNumber/:amount/deposit", (q, r) -> {
                 String accountNumber = q.params("accountNumber");
-                String amount = q.params("balance");
+                String amount = q.params("amount");
                 return transactionController.deposit(accountNumber, amount);
             }, asJson());
-            post("/transactions/:accountNumber/:balance/withdraw", (q, r) -> {
+            post("/transactions/:accountNumber/:amount/withdraw", (q, r) -> {
                 String accountNumber = q.params("accountNumber");
-                String amount = q.params("balance");
+                String amount = q.params("amount");
                 return transactionController.withdraw(accountNumber, amount);
             }, asJson());
-            post("/transactions/:fromAccountNumber/:toAccountNumber/:balance/transfer", (q, r) -> {
+            post("/transactions/:fromAccountNumber/:toAccountNumber/:amount/transfer", (q, r) -> {
                 String from = q.params("fromAccountNumber");
                 String to = q.params("toAccountNumber");
-                String amount = q.params("balance");
+                String amount = q.params("amount");
                 return transactionController.transfer(from, to, amount);
             }, asJson());
         });

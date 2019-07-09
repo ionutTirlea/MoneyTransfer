@@ -45,8 +45,8 @@ public class TransactionService {
         LOG.info("Withdraw {} from account {}", amount.doubleValue(), accountNumber);
 
         Account account = accountService.getAccount(accountNumber);
-        checkBalanceAfterWithdrawal(amount, account);
         synchronized (account) {
+            checkBalanceAfterWithdrawal(amount, account);
             account.setBalance(account.getBalance().subtract(amount));
         }
 
@@ -62,7 +62,6 @@ public class TransactionService {
         Account from = accountService.getAccount(fromAccountNumber);
         Account to = accountService.getAccount(toAccountNumber);
 
-        checkBalanceAfterWithdrawal(amount, from);
         transfer(to, from, amount);
 
         transactionRepository.create(fromAccountNumber, DEBIT, amount);
@@ -77,6 +76,7 @@ public class TransactionService {
 
         synchronized (lock1) {
             synchronized (lock2) {
+                checkBalanceAfterWithdrawal(amount, from);
                 from.setBalance(from.getBalance().subtract(amount));
                 to.setBalance(to.getBalance().add(amount));
             }
