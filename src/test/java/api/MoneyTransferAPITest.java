@@ -35,6 +35,9 @@ public class MoneyTransferAPITest {
         AccountResponse accountResponse = RequestHelper.createAccount("testDeposit").as(AccountResponse.class);
         long accountNumber = accountResponse.getAccountNumber();
 
+        RequestHelper.deposit(String.valueOf(accountNumber), "0")
+                .then().statusCode(400);
+
         RequestHelper.deposit(String.valueOf(accountNumber), "10")
                 .then().statusCode(200);
 
@@ -60,6 +63,9 @@ public class MoneyTransferAPITest {
 
         AccountResponse accountResponse = RequestHelper.createAccount("testWithdraw").as(AccountResponse.class);
         long accountNumber = accountResponse.getAccountNumber();
+
+        RequestHelper.deposit(String.valueOf(accountNumber), "0")
+                .then().statusCode(400);
 
         RequestHelper.withdraw(String.valueOf(accountNumber), "10")
                 .then().statusCode(400);

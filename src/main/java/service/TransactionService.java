@@ -115,7 +115,7 @@ public class TransactionService {
         if (amount.signum() < 0) {
             throw new BadRequestException("Amount can't be negative");
         }
-        if (amount.equals(BigDecimal.ZERO)) {
+        if (amount.intValue() == 0) {
             throw new BadRequestException("Amount must be > 0!");
         }
     }
